@@ -1,0 +1,16 @@
+{
+    "name"         : "haxeui-rich-text",
+    "url"          : "https://github.com/ianharrigan/haxeui-rich-text",
+    "license"      : "MIT",
+    "tags"         : ["rich", "ui", "haxeui"],
+    "description"  : "Rich text for HaxeUI",
+    "version"      : "0.1.0",
+    "releasenote"  : "",
+    "contributors" : ["ianharrigan"],
+    "dependencies" : {
+        "openfl"        : "",
+        "actuate"       : "",
+        "hscript"       : "",
+        "haxeui"       : ""
+    }
+}

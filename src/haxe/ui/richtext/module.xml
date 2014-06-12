@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<module>
+	<exports>
+		<component alias="code" class="haxe.ui.richtext.Code" />
+		<component alias="rtfview" class="haxe.ui.richtext.RTFView" />
+	</exports>
+	<themes>
+		<public>
+			<styles path="css/rtf.css" />
+			<styles path="css/code.css" />
+		</public>
+	</themes>
+</module>

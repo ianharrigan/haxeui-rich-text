@@ -91,9 +91,19 @@ class Code extends TextInput {
 	}
 	
 	private function _onCodeKeyDown(event:KeyboardEvent):Void {
+		//keyCode 9 : Tab
 		if (event.keyCode == 9 && event.ctrlKey == false && event.altKey == false && event.shiftKey == false) {
 			replaceSelectedText("    ");
 			applyRules();
+			trace("test");
+		}
+		else if (event.keyCode == 9 && event.ctrlKey == false && event.altKey == false && event.shiftKey == true)
+		{
+			var tf:TextField = cast(_textDisplay.display, TextField);
+			tf.setSelection(get_selectionBeginIndex() - 4, get_selectionBeginIndex());
+			trace(tf.getLineIndexAtPoint(get_selectionBeginIndex(),get_selectionBeginIndex()));
+			replaceSelectedText("");
+			trace("done");
 		}
 	}
 	

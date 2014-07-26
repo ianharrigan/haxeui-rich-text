@@ -95,29 +95,29 @@ class Code extends TextInput {
 		if (event.keyCode == 9 && event.ctrlKey == false && event.altKey == false && event.shiftKey == false) {
 			replaceSelectedText("    ");
 			applyRules();
-			trace("test");
 		}
+		/* Handle Shift+Tab : this wi*/
 		else if (event.keyCode == 9 && event.ctrlKey == false && event.altKey == false && event.shiftKey == true)
 		{
-
-			//trace(StringTools.replace(_textDisplay.text, "\r", ""));
 
 			var tf:TextField = cast(_textDisplay.display, TextField);
 			var lineIndex:Int = tf.getLineIndexOfChar(get_selectionBeginIndex());
 			var lineBeginIndex:Int = tf.getLineOffset(lineIndex);
+			var lineText:String = tf.getLineText(lineIndex);
+			
+			var endFreeSpace:Int = lineBeginIndex;
 
-			if (lineBeginIndex == get_selectionBeginIndex())
+			for (i in 0...lineText.length) {
+				if (lineText.charAt(i) == " ")
+					endFreeSpace++;
+				else
+					break;
+			}
+
+			if (lineBeginIndex <= get_selectionBeginIndex() && get_selectionBeginIndex() <= endFreeSpace)
 			{
 
-				var lineText:String = tf.getLineText(lineIndex);
-				trace(lineText);
-				trace(lineBeginIndex);
 				var indexInLine:Int = get_selectionBeginIndex() - lineBeginIndex;
-				trace(indexInLine);
-				if (lineText.substr(0,4) == "    ")
-					trace("true");
-
-
 				var spaceToRemove:Int = 0;
 
 				for (i in 0...4) {
@@ -130,9 +130,6 @@ class Code extends TextInput {
 				tf.setSelection(get_selectionBeginIndex()-spaceToRemove, get_selectionBeginIndex());
 				replaceSelectedText("");
 			}
-
-			//tf.setSelection(0, lineBeginIndex);
-			//replaceSelectedText("");
 		}
 	}
 	

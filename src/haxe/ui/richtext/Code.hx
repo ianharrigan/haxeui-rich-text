@@ -96,7 +96,7 @@ class Code extends TextInput {
 			replaceSelectedText("    ");
 			applyRules();
 		}
-		/* Handle Shift+Tab : this wi*/
+		/* Handle Shift+Tab : this will remove the first /t of the line*/
 		else if (event.keyCode == 9 && event.ctrlKey == false && event.altKey == false && event.shiftKey == true)
 		{
 

@@ -99,11 +99,40 @@ class Code extends TextInput {
 		}
 		else if (event.keyCode == 9 && event.ctrlKey == false && event.altKey == false && event.shiftKey == true)
 		{
+
+			//trace(StringTools.replace(_textDisplay.text, "\r", ""));
+
 			var tf:TextField = cast(_textDisplay.display, TextField);
-			tf.setSelection(get_selectionBeginIndex() - 4, get_selectionBeginIndex());
-			trace(tf.getLineIndexAtPoint(get_selectionBeginIndex(),get_selectionBeginIndex()));
-			replaceSelectedText("");
-			trace("done");
+			var lineIndex:Int = tf.getLineIndexOfChar(get_selectionBeginIndex());
+			var lineBeginIndex:Int = tf.getLineOffset(lineIndex);
+
+			if (lineBeginIndex == get_selectionBeginIndex())
+			{
+
+				var lineText:String = tf.getLineText(lineIndex);
+				trace(lineText);
+				trace(lineBeginIndex);
+				var indexInLine:Int = get_selectionBeginIndex() - lineBeginIndex;
+				trace(indexInLine);
+				if (lineText.substr(0,4) == "    ")
+					trace("true");
+
+
+				var spaceToRemove:Int = 0;
+
+				for (i in 0...4) {
+					if (lineText.charAt(i) == " ")
+						spaceToRemove++;
+					else
+						break;
+				}
+
+				tf.setSelection(get_selectionBeginIndex()-spaceToRemove, get_selectionBeginIndex());
+				replaceSelectedText("");
+			}
+
+			//tf.setSelection(0, lineBeginIndex);
+			//replaceSelectedText("");
 		}
 	}
 	
@@ -124,7 +153,7 @@ class Code extends TextInput {
 			}
 			
 			_caller = new AsyncThreadCaller(new SyntaxHighlightRunner(tf, _syntax));
-			_caller.start();
+			_caller.start();                                                                                                                                                                                                                                                                                                                                 
 		}
 	}
 }

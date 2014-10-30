@@ -91,9 +91,45 @@ class Code extends TextInput {
 	}
 	
 	private function _onCodeKeyDown(event:KeyboardEvent):Void {
+		//keyCode 9 : Tab
 		if (event.keyCode == 9 && event.ctrlKey == false && event.altKey == false && event.shiftKey == false) {
 			replaceSelectedText("    ");
 			applyRules();
+		}
+		/* Handle Shift+Tab : this will remove the first /t of the line*/
+		else if (event.keyCode == 9 && event.ctrlKey == false && event.altKey == false && event.shiftKey == true)
+		{
+
+			var tf:TextField = cast(_textDisplay.display, TextField);
+			var lineIndex:Int = tf.getLineIndexOfChar(get_selectionBeginIndex());
+			var lineBeginIndex:Int = tf.getLineOffset(lineIndex);
+			var lineText:String = tf.getLineText(lineIndex);
+			
+			var endFreeSpace:Int = lineBeginIndex;
+
+			for (i in 0...lineText.length) {
+				if (lineText.charAt(i) == " ")
+					endFreeSpace++;
+				else
+					break;
+			}
+
+			if (lineBeginIndex <= get_selectionBeginIndex() && get_selectionBeginIndex() <= endFreeSpace)
+			{
+
+				var indexInLine:Int = get_selectionBeginIndex() - lineBeginIndex;
+				var spaceToRemove:Int = 0;
+
+				for (i in 0...4) {
+					if (lineText.charAt(i) == " ")
+						spaceToRemove++;
+					else
+						break;
+				}
+
+				tf.setSelection(get_selectionBeginIndex()-spaceToRemove, get_selectionBeginIndex());
+				replaceSelectedText("");
+			}
 		}
 	}
 	
@@ -114,7 +150,7 @@ class Code extends TextInput {
 			}
 			
 			_caller = new AsyncThreadCaller(new SyntaxHighlightRunner(tf, _syntax));
-			_caller.start();
+			_caller.start();                                                                                                                                                                                                                                                                                                                                 
 		}
 	}
 }

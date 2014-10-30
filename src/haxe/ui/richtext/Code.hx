@@ -134,10 +134,13 @@ private class SyntaxHighlightRunner extends Runner {
 		_syntax = syntax;
 		_runningTimeShare = timeShare;
 
+		/*
 		_syntaxRules = new Array<String>();
 		for (rule in _syntax.rules.keys()) {
 			_syntaxRules.push(rule);
 		}
+		*/
+		_syntaxRules = _syntax.rulesArray;
 		_matches = new Map<String, Array<Dynamic>>();
 		_txt = tf.text;
 		if (_txt != "") {

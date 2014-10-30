@@ -4,6 +4,7 @@ import openfl.text.TextFormat;
 
 class CodeSyntax {
 	private var _rules:Map<String, TextFormat>;
+	private var _rulesArray:Array<String>;
 	private var _compiledRules:Map<String, EReg>;
 	private var _defaultFormat:TextFormat;
 	private var _identifier:String;
@@ -11,6 +12,7 @@ class CodeSyntax {
 	public function new() {
 		_identifier = "";
 		_rules = new Map<String, TextFormat>();
+		_rulesArray = new Array<String>();
 		_compiledRules = new Map<String, EReg>();
 		_defaultFormat = new TextFormat("_typewriter", 13, 0x000000);
 	}
@@ -19,16 +21,20 @@ class CodeSyntax {
 		var f:TextFormat = new TextFormat(_defaultFormat.font, _defaultFormat.size, color);
 		f.bold = bold;
 		_rules.set(regex, f);
+		_rulesArray.push(regex);
 	}	
 	
 	public static function getSyntax(id:String):CodeSyntax {
 		var syntax:CodeSyntax = new CodeSyntax();
+		id = id.toLowerCase();
 		if (id == "haxe") {
 			syntax = new HaxeSyntax();
 		} else if (id == "xml") {
 			syntax = new XMLSyntax();
 		} else if (id == "css") {
 			syntax = new CSSSyntax();
+		} else if (id == "haxeui-xml") {
+			syntax = new HaxeUIXMLSyntax();
 		}
 		return syntax;
 	}
@@ -39,6 +45,7 @@ class CodeSyntax {
 	public var identifier(get, null):String;
 	public var defaultFormat(get, set):TextFormat;
 	public var rules(get, null):Map<String, TextFormat>;
+	public var rulesArray(get, null):Array<String>;
 	
 	private function get_identifier():String {
 		return _identifier;
@@ -57,6 +64,9 @@ class CodeSyntax {
 		return _rules;
 	}
 	
+	private function get_rulesArray():Array<String> {
+		return _rulesArray;
+	}
 	//******************************************************************************************
 	// Helpers
 	//******************************************************************************************
